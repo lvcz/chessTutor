@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @aula.nome %>
+</p>
+
+<p>
+  <strong>Conteudo:</strong>
+  <%= @aula.conteudo %>
+</p>
+
+<p>
+  <strong>Fen:</strong>
+  <%= @aula.fen %>
+</p>
+
+<p>
+  <strong>Moves:</strong>
+  <%= @aula.moves %>
+</p>
+
+<p>
+  <strong>Usuario:</strong>
+  <%= @aula.usuario_id %>
+</p>
+
+<%= link_to 'Edit', edit_aula_path(@aula) %> |
+<%= link_to 'Back', aulas_path %>
