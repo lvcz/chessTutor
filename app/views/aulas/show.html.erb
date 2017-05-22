@@ -10,20 +10,29 @@
   <%= @aula.conteudo %>
 </p>
 
-<p>
-  <strong>Fen:</strong>
-  <%= @aula.fen %>
-</p>
+
+
+<div id="divFen" style="display: none;"><%= @aula.fen %></div>
+
 
 <p>
   <strong>Moves:</strong>
   <%= @aula.moves %>
 </p>
 
-<p>
-  <strong>Usuario:</strong>
-  <%= @aula.usuario_id %>
-</p>
+
+<div id="board" style="width: 600px"></div>
+
+
+<script type="text/javascript">
+   
+  var cfg = {
+  position: $("#divFen").text()
+};
+	var board = ChessBoard('board',cfg);
+	
+</script>
+
 
 <%= link_to 'Edit', edit_aula_path(@aula) %> |
 <%= link_to 'Back', aulas_path %>

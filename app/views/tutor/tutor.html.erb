@@ -1,0 +1,12 @@
+<div id="board" style="width: 600px"></div>
+<div id="divFen" style="display: none;"><%= @fen %></div>
+
+
+<script type="text/javascript">
+   
+  var cfg = {
+  position: $("#divFen").text()
+};
+	var board = ChessBoard('board',cfg);
+	
+</script>
