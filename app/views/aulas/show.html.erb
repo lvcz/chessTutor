@@ -26,10 +26,22 @@
 
 <script type="text/javascript">
    
-  var cfg = {
-  position: $("#divFen").text()
-};
+  var cfg = {  position: $("#divFen").text()};
 	var board = ChessBoard('board',cfg);
+	
+	highlight('a8','1',null);
+	highlight('a1','1',null);
+	//$( "inpDaut[value='Hot Fuzz']" )
+	
+	function highlight(quadro,valor,cor){
+	  var quadro = $("div").find("[data-square='" + quadro + "']");
+	  if(quadro == null)return;
+	  
+	  quadro.text(valor);
+	  
+	}
+	
+	
 	
 </script>
 

@@ -1,0 +1,25 @@
+h1 Listing highlights
+
+table
+  thead
+    tr
+      th Peca
+      th Valor
+      th Cor
+      th
+      th
+      th
+
+  tbody
+    - @highlights.each do |highlight|
+      tr
+        td = highlight.peca
+        td = highlight.valor
+        td = highlight.cor
+        td = link_to 'Show', highlight
+        td = link_to 'Edit', edit_highlight_path(highlight)
+        td = link_to 'Destroy', highlight, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Highlight', new_highlight_path

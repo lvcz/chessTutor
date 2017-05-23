@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :highlights
 get '/tutor', to: 'tutor#tutor' do
    erb :tutor, :locals => {:fen => params[:fen]}
 end
