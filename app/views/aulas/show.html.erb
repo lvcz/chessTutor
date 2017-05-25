@@ -1,3 +1,8 @@
+<head> 
+<script src="../assets/chessboard-0.3.0.min.js"></script>
+</head>
+
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -26,21 +31,28 @@
 
 <script type="text/javascript">
    
-  var cfg = {  position: $("#divFen").text()};
+  var cfg = {
+   showNotation: false,
+   position: $("#divFen").text()
+
+	};
 	var board = ChessBoard('board',cfg);
+	board.showNotation(false);
 	
 	highlight('a8','1',null);
 	highlight('a1','1',null);
 	//$( "inpDaut[value='Hot Fuzz']" )
 	
 	function highlight(quadro,valor,cor){
-	  var quadro = $("div").find("[data-square='" + quadro + "']");
+	  var quadro = getQuadro(quadro);
 	  if(quadro == null)return;
 	  
 	  quadro.append('<div>'+valor+'</div>');
 	  
 	}
-	
+	function getQuadro(quadro){
+		return $("div").find("[data-square='" + quadro + "']");
+	}
 	
 	
 </script>
