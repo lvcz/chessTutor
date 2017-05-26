@@ -15,6 +15,7 @@
     <%= f.label :nome %>
     <%= f.text_field :nome %>
   </div>
+  <p> teste</p>
 
   <div class="field">
     <%= f.label :conteudo %>
@@ -31,7 +32,24 @@
     <%= f.text_field :moves %>
   </div>
 
-
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Quadro</th>
+      <th>Valor</th>
+      <th>Cor</th>
+    </tr>
+  </thead>
+  
+  <tbody class='fields'>
+      <%= f.fields_for :marks do |mark| %>
+        <%= render 'mark', f: builder %>
+      <%end%>
+        
+  </tbody>
+  
+</table>
 
   <div class="actions">
     <%= f.submit %>
