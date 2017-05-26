@@ -15,10 +15,12 @@ class AulasController < ApplicationController
   # GET /aulas/new
   def new
     @aula = Aula.new
+    @aula.marks.build
   end
 
   # GET /aulas/1/edit
   def edit
+    @aula.marks.build
   end
 
   # POST /aulas
@@ -69,6 +71,6 @@ class AulasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def aula_params
-      params.require(:aula).permit(:nome, :conteudo, :fen, :moves, :usuario_id)
+      params.require(:aula).permit(:nome, :conteudo, :fen, :moves, :usuario_id, Mark.attribute_names.map(&:to_sym).push(:_destroy))
     end
 end

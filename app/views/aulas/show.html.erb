@@ -24,7 +24,11 @@
   <strong>Moves:</strong>
   <%= @aula.moves %>
 </p>
+<% @aula.marks.each do |t| %>
 
+
+
+<%end%>
 
 <div id="board" style="width: 600px"></div>
 
@@ -37,17 +41,18 @@
 
 	};
 	var board = ChessBoard('board',cfg);
+	var tamanho = board.squareSize();
 	
-	
-	highlight('a8','1',null);
-	highlight('a1','1',null);
+	highlight('a8','1','red');
+	highlight('a1','1','red');
 	
 	
 	function highlight(quadro,valor,cor){
 	  var quadro = getQuadro(quadro);
+	  
 	  if(quadro == null)return;
 	  
-	  quadro.append('<div>'+valor+'</div>');
+	  quadro.append('<div style=\"font-size:'+tamanho/2+'px;color:'+cor+';padding-left:'+tamanho/3+'px; padding-top:'+tamanho/5+'px;position:absolute;\">'+valor+'</div>');
 	  
 	}
 	function getQuadro(quadro){

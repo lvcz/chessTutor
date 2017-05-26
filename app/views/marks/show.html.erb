@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Quadro:</strong>
+  <%= @mark.quadro %>
+</p>
+
+<p>
+  <strong>Valor:</strong>
+  <%= @mark.valor %>
+</p>
+
+<p>
+  <strong>Cor:</strong>
+  <%= @mark.cor %>
+</p>
+
+<p>
+  <strong>Aula:</strong>
+  <%= @mark.aula %>
+</p>
+
+<%= link_to 'Edit', edit_mark_path(@mark) %> |
+<%= link_to 'Back', marks_path %>
