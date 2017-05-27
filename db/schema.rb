@@ -22,14 +22,6 @@ ActiveRecord::Schema.define(version: 20170526131401) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "highlights", force: :cascade do |t|
-    t.string   "peca"
-    t.string   "valor"
-    t.string   "cor"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "marks", force: :cascade do |t|
     t.string   "quadro"
     t.string   "valor"
@@ -55,12 +47,6 @@ ActiveRecord::Schema.define(version: 20170526131401) do
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
-  create_table "usuarios", force: :cascade do |t|
-    t.string   "nome"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end

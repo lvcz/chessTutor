@@ -1,9 +1,9 @@
 <tr>
   <td>
-    <%= f.input_field :_destroy, as: :hidden %>
+    <%= f.check_box :_destroy, as: :hidden %>
     <%= link_to 'Delete', '#', class: 'remove_record' %>
   </td>
-  <td><%= f.input :quadro, label: false %></td>
-  <td><%= f.input :valor, label: false %></td>
-  <td><%= f.input :cor, label: false %></td>
+  <td><%= f.text_field :quadro, label: false %></td>
+  <td><%= f.text_field :valor, label: false %></td>
+  <td><%= f.text_field :cor, label: false %></td>
 </tr>

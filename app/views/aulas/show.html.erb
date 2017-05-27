@@ -24,11 +24,7 @@
   <strong>Moves:</strong>
   <%= @aula.moves %>
 </p>
-<% @aula.marks.each do |t| %>
 
-
-
-<%end%>
 
 <div id="board" style="width: 600px"></div>
 
@@ -42,9 +38,12 @@
 	};
 	var board = ChessBoard('board',cfg);
 	var tamanho = board.squareSize();
-	
-	highlight('a8','1','red');
-	highlight('a1','1','red');
+
+  <% @aula.marks.each do |t| %>
+    highlight(t.quadro,t.valor,t.cor);
+  <%end%>
+
+	//highlight('a1','1','red');
 	
 	
 	function highlight(quadro,valor,cor){

@@ -68,6 +68,7 @@ gem 'chessboard'
 gem 'devise'
 gem 'slim-rails'
 gem 'jquery-ui-rails'
+gem 'wdm'
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'
