@@ -24,9 +24,7 @@
   <strong>Moves:</strong>
   <%= @aula.moves %>
 </p>
-<% @aula.marks.each do |t| %>
-
-
+<%= content_tag :div, class: "marks", data: {marks: @aula.marks} do %>
 
 <%end%>
 
