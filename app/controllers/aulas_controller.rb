@@ -10,6 +10,7 @@ class AulasController < ApplicationController
   # GET /aulas/1
   # GET /aulas/1.json
   def show
+    gon.marks= @aula.marks.all
   end
 
   # GET /aulas/new
@@ -71,6 +72,6 @@ class AulasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def aula_params
-      params.require(:aula).permit(:nome, :conteudo, :fen, :moves, :usuario_id, Mark.attribute_names.map(&:to_sym).push(:_destroy))
+      params.require(:aula).permit(:nome, :conteudo, :fen, :moves, :usuario_id,marks_attributes: Mark.attribute_names.map(&:to_sym).push(:_destroy))
     end
 end

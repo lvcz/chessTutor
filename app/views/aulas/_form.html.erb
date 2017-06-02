@@ -43,7 +43,7 @@
   </thead>
   
   <tbody class='fields'>
-      <%= f.fields_for :marks do |mark| %>
+      <%= f.fields_for :marks do |builder| %>
         <%= render 'mark', f: builder %>
       <%end%>
         
@@ -53,5 +53,6 @@
 
   <div class="actions">
     <%= f.submit %>
+    <%= link_to_add_row('Add Task', f, :marks, class: 'btn btn-primary') %>
   </div>
 <% end %>
