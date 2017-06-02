@@ -20,10 +20,7 @@
 <div id="divFen" style="display: none;"><%= @aula.fen %></div>
 
 
-<p>
-  <strong>Moves:</strong>
-  <%= @aula.moves %>
-</p>
+
 <%= content_tag :div, class: "marks", data: {marks: @aula.marks} do %>
 
 <%end%>
@@ -34,15 +31,16 @@
 <script type="text/javascript">
    
   var cfg = {
-   showNotation: false,
+   //showNotation: false,
    position: $("#divFen").text()
 
 	};
 	var board = ChessBoard('board',cfg);
 	var tamanho = board.squareSize();
-	$.each(gon.marks,)
-	//highlight('a8','1','red');
-	//highlight('a1','1','red');
+	$.each(gon.marks,function(quadro,cor,valor){
+		highlight(this.quadro,this.valor,this.cor);
+	});
+	
 	
 	
 	function highlight(quadro,valor,cor){
