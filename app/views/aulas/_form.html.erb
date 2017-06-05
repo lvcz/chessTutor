@@ -22,10 +22,10 @@
     <%= f.text_field :conteudo %>
   </div>
 
-  <div class="field">
-    <%= f.label :fen %>
+  
+    
     <%= f.text_field :fen %>
-  </div>
+  <div id="board" style="width: 600px"></div>
 
   
 
@@ -66,4 +66,23 @@
     <%= f.submit %>
     <%= link_to_add_row('Add Task', f, :marks, class: 'btn btn-primary') %>
   </div>
+  
+  
+  
+  <script type="text/javascript">
+    
+    var cfg= {
+      draggable: true,
+      sparePieces: true,
+      onChange: onChange
+    };
+    var board = ChessBoard('board',cfg);
+    
+    var onChange= function(oldPos, newPos) {
+    
+      $("input[name='aula[fen]']").val(ChessBoard.objToFen(newPos));
+      
+    }
+    
+  </script>
 <% end %>
