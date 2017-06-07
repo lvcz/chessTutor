@@ -24,8 +24,8 @@
 
   
     
-    <%= f.text_field :fen %>
-  <div id="board" style="width: 600px"></div>
+    <%= f.hidden_field :fen %>
+  <div id="board" style="width: 35%"></div>
 
   
 
@@ -71,18 +71,29 @@
   
   <script type="text/javascript">
     
+    var onChange= function(oldPos, newPos) {      
+      $("input[name='aula[fen]']").val(ChessBoard.objToFen(newPos));      
+    };
+
+    var onDrop = function(source, target, piece, newPos, oldPos, orientation) {
+        if(target =='offboard'){
+        return 'trash';
+      }
+    };
+
+    var position = $("input[name='aula[fen]']").val();
+
     var cfg= {
-      draggable: true,
-      sparePieces: true,
-      onChange: onChange
+      position:position,
+      draggable : true,
+      sparePieces : true,
+      onChange : onChange,
+      onDrop : onDrop
     };
     var board = ChessBoard('board',cfg);
+    $(window).resize(board.resize);
     
-    var onChange= function(oldPos, newPos) {
     
-      $("input[name='aula[fen]']").val(ChessBoard.objToFen(newPos));
-      
-    }
     
   </script>
 <% end %>
