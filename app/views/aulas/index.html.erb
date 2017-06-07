@@ -1,33 +1,39 @@
 <p id="notice"><%= notice %></p>
+<div class="container-fluid">
+<div class="col-xs-12">
+  <h1>Aulas</h1>
+</div>
+<div class="row">
 
-<h1>Aulas</h1>
+  <div class="col-xs-12">Bem Vindo à nossas aulas, sinta-se a vontade para explorar</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Conteudo</th>
-      <th>Fen</th>
-      <th>Usuario</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+</div>
+  <div class="table-responsive ">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th colspan="2"></th>
+          <th >Nome</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @aulas.each do |aula| %>
-      <tr>
-        <td><%= aula.nome %></td>
-        <td><%= aula.conteudo %></td>
-        <td><%= aula.fen %></td>
-        <td><%= aula.usuario_id %></td>
-        <td><%= link_to 'Show', aula %></td>
-        <td><%= link_to 'Edit', edit_aula_path(aula) %></td>
-        <td><%= link_to 'Destroy', aula, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+      <tbody>
+        <% @aulas.each do |aula| %>
+          <tr>
+            <td colspan="2"></td>
+            <td><%= aula.nome %></td>
+
+            <td><%= link_to '', aula ,class:'glyphicon glyphicon-king' %></td>
+            <td><%= link_to 'Edit', edit_aula_path(aula) %></td>
+            <td><%= link_to 'Destroy', aula, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
 </table>
-
+  </div>
 <br>
+
+</div>
 
 <%= link_to 'New Aula', new_aula_path %>
