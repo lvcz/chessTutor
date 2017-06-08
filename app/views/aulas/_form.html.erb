@@ -29,8 +29,7 @@
   </div>
 
   <h2>Quadros que seram marcados</h2>
-    <div class="table-responsive"></div>
-      <table class="table-hover">
+      <table class="table">
         <thead>
           <tr>
             <th></th>
@@ -40,16 +39,17 @@
           </tr>
         </thead>
 
-        <tbody class='fields'>
+        <tbody>
             <%= f.fields_for :marks do |builder| %>
               <%= render 'mark', f: builder %>
             <%end%>
 
         </tbody>
-</table>
-</div>
+      </table>
+    <%= link_to_add_row('Add Task', f, :marks, class: 'btn btn-primary') %>
 
-<table>
+<h2>Movimentos</h2>
+<table class="table">
   <thead>
     <tr> 
     <th> </th>
@@ -66,7 +66,7 @@
 
   <div class="actions">
     <%= f.submit %>
-    <%= link_to_add_row('Add Task', f, :marks, class: 'btn btn-primary') %>
+
   </div>
   
   
