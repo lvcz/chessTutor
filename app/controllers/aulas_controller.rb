@@ -1,4 +1,5 @@
 class AulasController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_aula, only: [:show, :edit, :update, :destroy]
 
   # GET /aulas
@@ -10,7 +11,8 @@ class AulasController < ApplicationController
   # GET /aulas/1
   # GET /aulas/1.json
   def show
-    gon.marks= @aula.marks.all
+    gon.marks = @aula.marks.all
+    gon.moves = @aula.moves.all
   end
 
   # GET /aulas/new

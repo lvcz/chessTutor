@@ -42,10 +42,11 @@
 	});
 	
 	
-	
-	$('#board').on('click', function() {
-  		board.move('e2-e4');
-	});
+	$.each(gon.moves ,function (de,para) {
+      $('#board').on('click', function () {
+          board.move(de+'-'+para);
+      });
+  });
 	
 	
 	function highlight(quadro,valor,cor){

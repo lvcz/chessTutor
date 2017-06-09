@@ -29,7 +29,7 @@ $(document).on('turbolinks:load', function() {
     var regexp, time;
     time = new Date().getTime();
     regexp = new RegExp($(this).data('id'), 'g');
-    $('.fields').append($(this).data('fields').replace(regexp, time));
+    $('.'+$(this).data('table')).append($(this).data('fields').replace(regexp, time));
     return event.preventDefault();
   });
   
