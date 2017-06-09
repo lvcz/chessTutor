@@ -1,0 +1,8 @@
+<tr>
+  <td>
+    <%= f.check_box :_destroy, as: :hidden %>
+    <%= link_to 'Delete', '#', class: 'remove_record' %>
+  </td>
+  <td><%= f.text_field :from, label: false %></td>
+  <td><%= f.text_field :to, label: false %></td>  
+</tr>

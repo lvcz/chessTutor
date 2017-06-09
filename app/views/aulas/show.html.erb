@@ -20,40 +20,42 @@
 <div id="divFen" style="display: none;"><%= @aula.fen %></div>
 
 
-<p>
-  <strong>Moves:</strong>
-  <%= @aula.moves %>
-</p>
 
-
-<div id="board" style="width: 600px"></div>
+<div id="board" style="width: 35%"></div>
 
 
 <script type="text/javascript">
    
   var cfg = {
-   showNotation: false,
+   //showNotation: false,
    position: $("#divFen").text()
 
 	};
 	var board = ChessBoard('board',cfg);
+	$(window).resize(board.resize);
+
 	var tamanho = board.squareSize();
+	
 
-  <% @aula.marks.each do |t| %>
-    highlight(t.quadro,t.valor,t.cor);
-  <%end%>
-
-	//highlight('a1','1','red');
+	$.each(gon.marks,function(quadro,cor,valor){
+		highlight(this.quadro,this.valor,this.cor);
+	});
+	
+	
+	
+	$('#board').on('click', function() {
+  		board.move('e2-e4');
+	});
 	
 	
 	function highlight(quadro,valor,cor){
 	  var quadro = getQuadro(quadro);
+
+	  if(quadro == null)return;	  
 	  
-	  if(quadro == null)return;
-	  
-	  quadro.append('<div style=\"font-size:'+tamanho/2+'px;color:'+cor+';padding-left:'+tamanho/3+'px; padding-top:'+tamanho/5+'px;position:absolute;\">'+valor+'</div>');
-	  
+	  quadro.append('<div style=\"font-size:'+tamanho/2+'px;color:'+cor+';padding-left:'+tamanho/3+'px; padding-top:'+tamanho/5+'px;position:absolute;\">'+valor+'</div>');  
 	}
+
 	function getQuadro(quadro){
 		return $("div").find("[data-square='" + quadro + "']");
 	}
