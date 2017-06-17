@@ -3,6 +3,10 @@
     <%= f.check_box :_destroy, as: :hidden %>
     <%= link_to 'Delete', '#', class: 'remove_record' %>
   </td>
-  <td><%= f.text_field :from, label: false %></td>
+  
   <td><%= f.text_field :to, label: false %></td>  
+  <td><%= f.text_field :pontos, label: false %></td>  
+  <td><%= f.text_field :nivel, label: false %></td> 
+  <td><%= f.text_field :parent_id, label: false %></td>  
+ <!--  <td> <%link_to new_move_path(:parent_id => ) %> </td> -->
 </tr>

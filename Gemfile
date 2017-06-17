@@ -69,7 +69,8 @@ gem 'devise'
 gem 'slim-rails'
 gem 'jquery-ui-rails'
 gem 'gon'
-gem 'wdm'
+#gem 'wdm'
+gem 'ancestry'
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'
