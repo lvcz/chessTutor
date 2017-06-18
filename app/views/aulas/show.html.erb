@@ -27,10 +27,12 @@
 <script type="text/javascript">
    
   var cfg = {
-   //showNotation: false,
-   position: $("#divFen").text()
-
+      draggable: true,
+      showNotation: false,
+      position: $("#divFen").text()
 	};
+
+
 	var board = ChessBoard('board',cfg);
 	$(window).resize(board.resize);
 
@@ -42,11 +44,11 @@
 	});
 	
 	
-	$.each(gon.moves ,function (de,para) {
-      $('#board').on('click', function () {
-          board.move(de+'-'+para);
-      });
-  });
+//	$.each(gon.moves ,function (de,para) {
+//      $('#board').on('click', function () {
+//          board.move(de+'-'+para);
+//      });
+//  });
 	
 	
 	function highlight(quadro,valor,cor){

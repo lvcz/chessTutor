@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170617043027) do
+ActiveRecord::Schema.define(version: 20170617193317) do
 
   create_table "aulas", force: :cascade do |t|
     t.string   "nome"
     t.string   "conteudo"
     t.string   "fen"
-    t.integer  "usuario_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -32,13 +31,16 @@ ActiveRecord::Schema.define(version: 20170617043027) do
   end
 
   create_table "moves", force: :cascade do |t|
-    t.string   "to"
     t.integer  "aula_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "ancestry"
     t.integer  "pontos"
+    t.integer  "moves"
     t.integer  "nivel"
+    t.integer  "integer"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "ancestry"
+    t.string   "fen_esperado"
+    t.string   "fen_computador"
     t.index ["ancestry"], name: "index_moves_on_ancestry"
     t.index ["aula_id"], name: "index_moves_on_aula_id"
   end
@@ -54,6 +56,8 @@ ActiveRecord::Schema.define(version: 20170617043027) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.integer  "last_aula",              default: 0
+    t.integer  "meus_pontos"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true

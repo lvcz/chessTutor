@@ -23,14 +23,19 @@
     <%= f.text_area :conteudo, rows:5 ,class:'form-control'%>
   </div>
 
-  <div class="form-group">
-
+  <div class="media">
+    <div class="media-middle">
         <%= f.hidden_field :fen %>
-        <div id="board" style="width: 35%;"></div>
+        <div id="board" style="width: 25%; float: left;"></div>
+    </div>
   </div>
 
+<div class="form-group">
+    <div id = "set_start_position" class="btn btn-primary"> Posicao inicial</div>
+    <div id = "clear_board" class="btn btn-danger"> Limpar tabuleiro</div>
 
-  <h2>Quadros que seram marcados</h2>
+</div>
+  <h2>Quadros que serão marcados</h2>
       <table class="table">
         <thead>
           <tr>
@@ -53,13 +58,13 @@
 <h2>Movimentos</h2>
 <table class="table">
   <thead>
-    <tr> 
-    <th> </th>
-    <th>movimento </th>
+    <tr>
+    <th>movimento do computador </th>
+    <th>movimento esperado </th>
     <th>pontos </th>
     <th>nivel </th>
-    <th>pai </th>
     <th></th>
+
     </tr>
   </thead>
   <tbody class='moves'>
@@ -68,40 +73,44 @@
     <%end%>
   </tbody>
 </table>
-    <%= link_to_add_row('Adicionar Movimento', f , :moves , class: 'btn btn-default') %>
+    <%= link_to_add_row('Adicionar Movimento', f , :moves , class: 'btn btn-primary') %>
 </br>
 
-
+<div class = "col-xs-12">
     <%= f.submit("Criar Aula",class: 'btn btn-primary') %>
+</div>
 
-  
-  
+<% end %>
   
   <script type="text/javascript">
-    
+
+
+
+    ///
     var onChange= function(oldPos, newPos) {      
-      $("input[name='aula[fen]']").val(ChessBoard.objToFen(newPos));      
+      $("input[name='aula[fen]']").val(ChessBoard.objToFen(newPos));
+
+//      if(tables_computador[0].fen() == "8/8/8/8/8/8/8/8"){
+          tables_computador[0].position(ChessBoard.objToFen(newPos));
+//      }
     };
 
-    var onDrop = function(source, target, piece, newPos, oldPos, orientation) {
-        if(target =='offboard'){
-        return 'trash';
-      }
-    };
+
 
     var position = $("input[name='aula[fen]']").val();
 
     var cfg= {
-      position:position,
+      position : position,
       draggable : true,
       sparePieces : true,
-      onChange : onChange,
-      onDrop : onDrop
+      dropOffBoard: 'trash',
+      onChange : onChange
     };
     var board = ChessBoard('board',cfg);
     $(window).resize(board.resize);
-    
-    
+    /// atributos dos botões
+    $('#set_start_position').on('click', board.start);
+    $('#clear_board').on('click', board.clear);
     
   </script>
-<% end %>
+

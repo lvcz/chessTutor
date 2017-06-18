@@ -17,6 +17,9 @@
 //= require turbolinks
 //= require_tree .
 
+var tables_computador = [];
+var tables_esperado = [];
+
 $(document).on('turbolinks:load', function() {
 
   $('form').on('click', '.remove_record', function(event) {

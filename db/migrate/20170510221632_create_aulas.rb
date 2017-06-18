@@ -4,8 +4,7 @@ class CreateAulas < ActiveRecord::Migration[5.0]
       t.string :nome
       t.string :conteudo
       t.string :fen
-      t.string :moves
-      t.integer :usuario_id
+
 
       t.timestamps
     end

@@ -25,8 +25,8 @@
             <td><%= aula.nome %></td>
 
             <td><%= link_to '', aula ,class:'glyphicon glyphicon-king' %></td>
-            <td><%= link_to 'Edit', edit_aula_path(aula) %></td>
-            <td><%= link_to 'Destroy', aula, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to '', edit_aula_path(aula) , class:'glyphicon glyphicon-pencil' %></td>
+            <td><%= link_to 'Apagar', aula, method: :delete, data: { confirm: 'Are you sure?' } , class: 'btn btn-danger' %></td>
           </tr>
         <% end %>
       </tbody>

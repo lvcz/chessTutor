@@ -1,12 +1,72 @@
 <tr>
-  <td>
-    <%= f.check_box :_destroy, as: :hidden %>
-    <%= link_to 'Delete', '#', class: 'remove_record' %>
+
+
+
+  <td><%= f.hidden_field :fen_computador, label: false,class:'form-control' %>
+        <div id="board_computador_<%= f.object.__id__ %>" style ="width: 200px;" ></div>
   </td>
-  
-  <td><%= f.text_field :to, label: false %></td>  
-  <td><%= f.text_field :pontos, label: false %></td>  
-  <td><%= f.text_field :nivel, label: false %></td> 
-  <td><%= f.text_field :parent_id, label: false %></td>  
- <!--  <td> <%link_to new_move_path(:parent_id => ) %> </td> -->
+  <td><%= f.hidden_field :fen_esperado, label: false ,class:'form-control' %>
+    <div id="board_esperado_<%= f.object.__id__ %>" style ="width: 200px;" ></div>
+  </td>
+  <td><%= f.text_field :pontos, label: false ,class:'form-control' %></td>
+  <td><%= f.text_field :nivel, label: false ,class:'form-control' %></td>
+  <td>
+    <%= f.hidden_field :_destroy%>
+    <%= link_to 'Apagar', '#', class: 'remove_record btn btn-danger' %>
+  </td>
 </tr>
+
+
+<script>
+
+    var onChange_computador = function(oldPos, newPos) {
+        $("#board_computador_<%= f.object.__id__ %>").prev('input[type=hidden]').val(ChessBoard.objToFen(newPos));
+    };
+    var onChange_esperado = function(oldPos, newPos) {
+        $("#board_esperado_<%=f.object.__id__ %>").prev('input[type=hidden]').val(ChessBoard.objToFen(newPos));
+    };
+
+    var onDrop_computador = function(source, target, piece, newPos, oldPos, orientation) {
+        board_esperado_<%=f.object.__id__ %>.position(ChessBoard.objToFen(newPos));
+    };
+
+    var onDrop_esperado = function(source, target, piece, newPos, oldPos, orientation) {
+        var my_index =tables_computador.indexOf(board_computador_<%= f.object.__id__ %>);
+        if(tables_computador.length - 1 > my_index){
+            tables_computador[my_index + 1].position(ChessBoard.objToFen(newPos));
+        }
+    };
+
+    var posicao_computador = $("#board_computador_<%= f.object.__id__ %>").prev('input[type=hidden]').val();
+    var posicao_esperado = $("#board_esperado_<%=f.object.__id__ %>").prev('input[type=hidden]').val();
+
+    if (posicao_computador === null || posicao_computador === "8/8/8/8/8/8/8/8"){
+      /*TODO: verifica se o anterior esta preenchido e utiliza o fen dele*/
+    }
+
+    var cfg_computador= {
+        position : posicao_computador,
+        draggable : true,
+        dropOffBoard: 'snapback',
+        onChange : onChange_computador,
+        onDrop : onDrop_computador
+    };
+
+    var cfg_esperado= {
+        position : posicao_esperado,
+        draggable : true,
+        dropOffBoard: 'snapback',
+        onChange : onChange_esperado,
+        onDrop : onDrop_esperado
+    };
+
+
+    var board_computador_<%= f.object.__id__ %> = ChessBoard("board_computador_<%= f.object.__id__ %>",cfg_computador);
+    $(window).resize(board_computador_<%= f.object.__id__ %> .resize);
+    tables_computador.push(board_computador_<%= f.object.__id__ %>);
+
+    var board_esperado_<%=f.object.__id__ %> = ChessBoard("board_esperado_<%=f.object.__id__ %>",cfg_esperado);
+    $(window).resize(board_esperado_<%=f.object.__id__ %>.resize);
+    tables_esperado.push(board_esperado_<%=f.object.__id__ %>);
+
+</script>

@@ -31,6 +31,12 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
       # t.datetime :locked_at
 
 
+
+      ###Meus campos###
+      t.integer :last_aula, default:0
+      t.integer :meus_pontos
+
+
       t.timestamps null: false
     end
 
