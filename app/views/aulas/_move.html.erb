@@ -1,12 +1,15 @@
 <tr>
 
 
+<td><%= f.hidden_field :fen_esperado, label: false ,class:'form-control' %>
+    <div id="board_esperado_<%= f.object.__id__ %>" style ="width: 200px;" ></div>
+  </td>
 
   <td><%= f.hidden_field :fen_computador, label: false,class:'form-control' %>
         <div id="board_computador_<%= f.object.__id__ %>" style ="width: 200px;" ></div>
   </td>
-  <td><%= f.hidden_field :fen_esperado, label: false ,class:'form-control' %>
-    <div id="board_esperado_<%= f.object.__id__ %>" style ="width: 200px;" ></div>
+  <td><%= f.hidden_field :fen_resultado, label: false,class:'form-control' %>
+        <div id="board_resultado_<%= f.object.__id__ %>" style ="width: 200px;" ></div>
   </td>
   <td><%= f.text_field :pontos, label: false ,class:'form-control' %></td>
   <td><%= f.text_field :nivel, label: false ,class:'form-control' %></td>
@@ -18,31 +21,81 @@
 
 
 <script>
-
-    var onChange_computador = function(oldPos, newPos) {
-        $("#board_computador_<%= f.object.__id__ %>").prev('input[type=hidden]').val(ChessBoard.objToFen(newPos));
+    /*****************Board_ do movimento esperado****************/
+    
+    
+    var onDrop_esperado = function(source, target, piece, newPos, oldPos, orientation) {
+        board_computador_<%=f.object.__id__ %>.position(ChessBoard.objToFen(newPos));
     };
-    var onChange_esperado = function(oldPos, newPos) {
+
+        /**Atualiza o valor no objeto**/
+     var onChange_esperado = function(oldPos, newPos) {
         $("#board_esperado_<%=f.object.__id__ %>").prev('input[type=hidden]').val(ChessBoard.objToFen(newPos));
     };
 
-    var onDrop_computador = function(source, target, piece, newPos, oldPos, orientation) {
-        board_esperado_<%=f.object.__id__ %>.position(ChessBoard.objToFen(newPos));
+        /**Posicao para inicializacao (no caso da edicao**/
+    var posicao_esperado = $("#board_esperado_<%=f.object.__id__ %>").prev('input[type=hidden]').val();
+    
+    var cfg_esperado= {
+        position : posicao_esperado,
+        draggable : true,
+        dropOffBoard: 'snapback',
+        onChange : onChange_esperado,
+        onDrop :onDrop_esperado
     };
 
-    var onDrop_esperado = function(source, target, piece, newPos, oldPos, orientation) {
-        var my_index =tables_computador.indexOf(board_computador_<%= f.object.__id__ %>);
-        if(tables_computador.length - 1 > my_index){
-            tables_computador[my_index + 1].position(ChessBoard.objToFen(newPos));
+    var board_esperado_<%=f.object.__id__ %> = ChessBoard("board_esperado_<%=f.object.__id__ %>",cfg_esperado);
+    $(window).resize(board_esperado_<%=f.object.__id__ %>.resize);
+    tables_esperado.push(board_esperado_<%=f.object.__id__ %>);
+
+    /*******************/
+
+
+
+    /***********Board Movimento resultante********/
+    /*Atualiza o proximo quadro*/
+    var onDrop_resultado = function(source, target, piece, newPos, oldPos, orientation) {
+        var my_index =tables_esperado.indexOf(board_esperado_<%= f.object.__id__ %>);
+        if(tables_esperado.length - 1 > my_index){
+            tables_esperado[my_index + 1].position(ChessBoard.objToFen(newPos));
         }
     };
 
-    var posicao_computador = $("#board_computador_<%= f.object.__id__ %>").prev('input[type=hidden]').val();
-    var posicao_esperado = $("#board_esperado_<%=f.object.__id__ %>").prev('input[type=hidden]').val();
 
-    if (posicao_computador === null || posicao_computador === "8/8/8/8/8/8/8/8"){
-      /*TODO: verifica se o anterior esta preenchido e utiliza o fen dele*/
-    }
+        /**Atualiza o valor no objeto**/
+     var onChange_resultado = function(oldPos, newPos) {
+        $("#board_resultado_<%=f.object.__id__ %>").prev('input[type=hidden]').val(ChessBoard.objToFen(newPos));
+    };
+
+        /**Posicao para inicializacao (no caso da edicao**/
+    var posicao_resultado = $("#board_resultado_<%=f.object.__id__ %>").prev('input[type=hidden]').val();
+    
+    var cfg_resultado= {
+        position : posicao_resultado,
+        draggable : true,
+        dropOffBoard: 'snapback',
+        onChange : onChange_resultado,
+        onDrop : onDrop_resultado
+    };
+
+    var board_resultado_<%=f.object.__id__ %> = ChessBoard("board_resultado_<%=f.object.__id__ %>",cfg_resultado);
+    $(window).resize(board_resultado_<%=f.object.__id__ %>.resize);
+    tables_resultado.push(board_resultado_<%=f.object.__id__ %>);
+
+
+
+    /*************Board movimento do computador*********/
+    
+    var onChange_computador = function(oldPos, newPos) {
+        $("#board_computador_<%= f.object.__id__ %>").prev('input[type=hidden]').val(ChessBoard.objToFen(newPos));
+    };
+   
+
+    var onDrop_computador = function(source, target, piece, newPos, oldPos, orientation) {
+        board_resultado_<%=f.object.__id__ %>.position(ChessBoard.objToFen(newPos));
+    };
+
+    var posicao_computador = $("#board_computador_<%= f.object.__id__ %>").prev('input[type=hidden]').val();
 
     var cfg_computador= {
         position : posicao_computador,
@@ -52,21 +105,21 @@
         onDrop : onDrop_computador
     };
 
-    var cfg_esperado= {
-        position : posicao_esperado,
-        draggable : true,
-        dropOffBoard: 'snapback',
-        onChange : onChange_esperado,
-        onDrop : onDrop_esperado
-    };
-
 
     var board_computador_<%= f.object.__id__ %> = ChessBoard("board_computador_<%= f.object.__id__ %>",cfg_computador);
     $(window).resize(board_computador_<%= f.object.__id__ %> .resize);
     tables_computador.push(board_computador_<%= f.object.__id__ %>);
+    /*******************/
 
-    var board_esperado_<%=f.object.__id__ %> = ChessBoard("board_esperado_<%=f.object.__id__ %>",cfg_esperado);
-    $(window).resize(board_esperado_<%=f.object.__id__ %>.resize);
-    tables_esperado.push(board_esperado_<%=f.object.__id__ %>);
+
+
+    /***********Board Movimento resultante********/
+
+
+
+
+    if (posicao_computador === null || posicao_computador === "8/8/8/8/8/8/8/8"){
+      /*TODO: verifica se o anterior esta preenchido e utiliza o fen dele*/
+    }
 
 </script>

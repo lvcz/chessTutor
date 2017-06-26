@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170617193317) do
+ActiveRecord::Schema.define(version: 20170626234116) do
 
   create_table "aulas", force: :cascade do |t|
     t.string   "nome"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170617193317) do
     t.string   "ancestry"
     t.string   "fen_esperado"
     t.string   "fen_computador"
+    t.string   "fen_resultado"
     t.index ["ancestry"], name: "index_moves_on_ancestry"
     t.index ["aula_id"], name: "index_moves_on_aula_id"
   end

@@ -19,6 +19,7 @@
 
 var tables_computador = [];
 var tables_esperado = [];
+var tables_resultado =[];
 
 $(document).on('turbolinks:load', function() {
 

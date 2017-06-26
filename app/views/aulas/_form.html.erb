@@ -59,8 +59,10 @@
 <table class="table">
   <thead>
     <tr>
-    <th>movimento do computador </th>
     <th>movimento esperado </th>
+    <th>movimento do computador </th>
+    <th> Movimento resultado</th>
+    
     <th>pontos </th>
     <th>nivel </th>
     <th></th>
@@ -91,7 +93,7 @@
       $("input[name='aula[fen]']").val(ChessBoard.objToFen(newPos));
 
 //      if(tables_computador[0].fen() == "8/8/8/8/8/8/8/8"){
-          tables_computador[0].position(ChessBoard.objToFen(newPos));
+          tables_esperado[0].position(ChessBoard.objToFen(newPos));
 //      }
     };
 
