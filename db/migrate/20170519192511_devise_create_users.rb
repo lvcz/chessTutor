@@ -34,7 +34,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
 
       ###Meus campos###
       t.integer :last_aula, default:0
-      t.integer :meus_pontos
+      t.integer :nivel
+      t.string  :nome
 
 
       t.timestamps null: false

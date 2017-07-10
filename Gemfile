@@ -69,7 +69,7 @@ gem 'devise'
 gem 'slim-rails'
 gem 'jquery-ui-rails'
 gem 'gon'
-#gem 'wdm'
+gem 'wdm'
 gem 'ancestry'
 
 

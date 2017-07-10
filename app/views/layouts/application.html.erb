@@ -6,13 +6,22 @@
     <title><%= full_title(yield(:title))%></title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'cytoscape'  %>
+    <%= javascript_include_tag 'cytoscape-context-menus'  %>
   </head>
 
   <body>
    <%=render 'layouts/navbar'%>
   <div class="container">
   <%= yield %>
+
+    <!--<nav class="fixed-bottom navbar-light bg-faded" >-->
+      <!--<div > teste</div>-->
+
+    <!--</nav>-->
+
   </div>
+
     
   </body>
 </html>

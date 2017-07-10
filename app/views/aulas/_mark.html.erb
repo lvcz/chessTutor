@@ -1,9 +1,10 @@
 <tr>
-  <td>
-    <%= f.hidden_field :_destroy, as: :hidden %>
-    <%= link_to 'Delete', '#', class: 'remove_record' %>
-  </td>
+
   <td><%= f.text_field :quadro, label: false,class:'form-control' %></td>
   <td><%= f.text_field :valor, label: false,class:'form-control' %></td>
-  <td><%= f.text_field :cor, label: false ,class:'form-control'%></td>
+  <td><%= f.select :cor,[['Vermelho','red'],['Amarelo','yellow'],['Azul','blue']],{:include_blank => ''},class:'form-control'%></td>
+  <td>
+    <%= f.hidden_field :_destroy, as: :hidden %>
+    <%= link_to 'Delete', '#', class: 'remove_record btn btn-danger' %>
+  </td>
 </tr>

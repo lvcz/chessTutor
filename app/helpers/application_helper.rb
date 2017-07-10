@@ -17,4 +17,7 @@ module ApplicationHelper
     end
     link_to(name, '#', class: "add_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", ""), table: association})
   end
+
+
+
 end

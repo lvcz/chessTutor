@@ -18,6 +18,7 @@ class AulasController < ApplicationController
   # GET /aulas/new
   def new
     @aula = Aula.new
+    @aula.autor = current_user.nome
     @aula.marks.build
     @aula.moves.build
   end
@@ -35,7 +36,7 @@ class AulasController < ApplicationController
 
     respond_to do |format|
       if @aula.save
-        format.html { redirect_to @aula, notice: 'Aula was successfully created.' }
+        format.html { redirect_to @aula, notice: 'Aula criada com sucesso.' }
         format.json { render :show, status: :created, location: @aula }
       else
         format.html { render :new }
@@ -49,7 +50,7 @@ class AulasController < ApplicationController
   def update
     respond_to do |format|
       if @aula.update(aula_params)
-        format.html { redirect_to @aula, notice: 'Aula was successfully updated.' }
+        format.html { redirect_to @aula, notice: 'Aula atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @aula }
       else
         format.html { render :edit }
@@ -63,7 +64,7 @@ class AulasController < ApplicationController
   def destroy
     @aula.destroy
     respond_to do |format|
-      format.html { redirect_to aulas_url, notice: 'Aula was successfully destroyed.' }
+      format.html { redirect_to aulas_url, notice: 'Aula apagada.' }
       format.json { head :no_content }
     end
   end
@@ -76,6 +77,6 @@ class AulasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def aula_params
-      params.require(:aula).permit(:nome, :conteudo, :fen,:usuario_id,marks_attributes: Mark.attribute_names.map(&:to_sym).push(:_destroy),moves_attributes: Move.attribute_names.map(&:to_sym).push(:_destroy))
+      params.require(:aula).permit(:nome, :conteudo, :fen,:autor,:jogador ,marks_attributes: Mark.attribute_names.map(&:to_sym).push(:_destroy),moves_attributes: Move.attribute_names.map(&:to_sym).push(:_destroy))
     end
 end

@@ -10,14 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170626234116) do
+ActiveRecord::Schema.define(version: 20170617042842) do
 
   create_table "aulas", force: :cascade do |t|
     t.string   "nome"
     t.string   "conteudo"
     t.string   "fen"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "dificuldade"
+    t.string   "autor"
+    t.string   "jogador"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "marks", force: :cascade do |t|
@@ -31,17 +34,17 @@ ActiveRecord::Schema.define(version: 20170626234116) do
   end
 
   create_table "moves", force: :cascade do |t|
+    t.string   "fen_resultado"
+    t.string   "fen_esperado"
+    t.string   "fen_computador"
     t.integer  "aula_id"
     t.integer  "pontos"
-    t.integer  "moves"
     t.integer  "nivel"
-    t.integer  "integer"
+    t.string   "mensagem"
+    t.boolean  "final"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "ancestry"
-    t.string   "fen_esperado"
-    t.string   "fen_computador"
-    t.string   "fen_resultado"
     t.index ["ancestry"], name: "index_moves_on_ancestry"
     t.index ["aula_id"], name: "index_moves_on_aula_id"
   end
@@ -58,7 +61,8 @@ ActiveRecord::Schema.define(version: 20170626234116) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.integer  "last_aula",              default: 0
-    t.integer  "meus_pontos"
+    t.integer  "nivel"
+    t.string   "nome"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true

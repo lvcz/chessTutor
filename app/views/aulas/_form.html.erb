@@ -19,9 +19,23 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :conteudo %>
-    <%= f.text_area :conteudo, rows:5 ,class:'form-control'%>
+    <label>Nível necessário para acessar a aula</label>
+
+    <%= f.text_field :dificuldade , class: 'form-control' %>
+
+
   </div>
+
+
+  <div class="form-group">
+    <%= f.label :conteudo %>
+    <%= f.text_area :conteudo, rows:2 ,class:'form-control'%>
+  </div>
+
+    <div class="form-group">
+      <label>O aluno jogará com:</label>
+      <%= f.select :jogador , options_for_select( [['branco','w'],['preto','b']], :selected => :jogador),{} ,{:class => "form-control"} %>
+    </div>
 
   <div class="media">
     <div class="media-middle">
@@ -39,10 +53,11 @@
       <table class="table">
         <thead>
           <tr>
-            <th></th>
+
             <th>Quadro</th>
             <th>Valor</th>
             <th>Cor</th>
+            <th></th>
           </tr>
         </thead>
 
@@ -62,9 +77,10 @@
     <th>movimento esperado </th>
     <th>movimento do computador </th>
     <th> Movimento resultado</th>
-    
     <th>pontos </th>
-    <th>nivel </th>
+
+    <th>mensagem </th>
+    <th>Fim</th>
     <th></th>
 
     </tr>
@@ -76,7 +92,7 @@
   </tbody>
 </table>
     <%= link_to_add_row('Adicionar Movimento', f , :moves , class: 'btn btn-primary') %>
-</br>
+<br>
 
 <div class = "col-xs-12">
     <%= f.submit("Criar Aula",class: 'btn btn-primary') %>

@@ -1,0 +1,192 @@
+
+
+<style>
+  #cy {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+</style>
+<body>
+<div id='cy' ></div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<script>
+
+var i = 0;
+
+
+    document.addEventListener('DOMContentLoaded', function(){
+        var cy = window.cy = cytoscape({
+            container: document.getElementById('cy'),
+            style: [
+                {
+                    selector: 'node',
+                    style: {
+                        'content': 'data(name)',
+                        'width': '50px',
+                        'height':'50px'
+                    }
+                },
+                {
+                    selector: 'edge',
+                    style: {
+                        'target-arrow-shape': 'triangle'
+                    }
+                },
+                {
+                    selector: ':selected',
+                    style: {
+                    }
+                }
+            ],
+            elements: {
+                nodes: [
+                    { data: { id: 'g', name: 'George' } }
+                ]
+
+            }
+        });
+
+        var selectAllOfTheSameType = function(ele) {
+            cy.elements().unselect();
+            if(ele.isNode()) {
+                cy.nodes().select();
+            }
+            else if(ele.isEdge()) {
+                cy.edges().select();
+            }
+        };
+
+        cy.contextMenus({
+            menuItems: [
+                {
+                    id: 'remove',
+                    content: 'remove',
+                    tooltipText: 'remove',
+                    selector: 'node, edge',
+                    onClickFunction: function (event) {
+                        var target = event.target || event.cyTarget;
+                        target.remove();
+                    },
+                    hasTrailingDivider: true
+                },
+//                {
+//                    id: 'hide',
+//                    content: 'hide',
+//                    tooltipText: 'hide',
+//                    selector: '*',
+//                    onClickFunction: function (event) {
+//                        var target = event.target || event.cyTarget;
+//                        target.hide();
+//                    },
+//                    disabled: false
+//                },
+                {
+                    id: 'add-node',
+                    content: 'add node',
+                    tooltipText: 'add node',
+                    coreAsWell: true,
+                    onClickFunction: function (event) {
+                        var data = {
+                            group: 'nodes'
+                        };
+
+                        var pos = event.position || event.cyPosition;
+
+                        cy.add({
+                            data: data,
+                            position: {
+                                x: pos.x,
+                                y: pos.y
+                            }
+                        });
+
+
+
+                    }
+                },
+                {
+                    id: 'remove-selected',
+                    content: 'remove selected',
+                    tooltipText: 'remove selected',
+                    coreAsWell: true,
+                    onClickFunction: function (event) {
+                        cy.$(':selected').remove();
+                    }
+                },
+                {
+                    id: 'add-child',
+                    content: 'add child',
+                    tooltipText: 'add child',
+                    selector: 'node',
+                    onClickFunction: function (event) {
+                        var data = {
+                            group: 'nodes'
+                        };
+
+                        var pos = event.position || event.cyPosition;
+
+                        cy.add({
+                            data: data,
+                            position: {
+                                x: pos.x +50,
+                                y: pos.y +10
+                            }
+                        });
+                        cy.add({
+                                data: {
+                                    source: event.target.id(),
+                                    target: data.id
+                                }
+                            }
+                        );
+                        i++;
+                    }
+                },
+                {
+                    id: 'define-fen',
+                    content: 'define fen',
+                    tooltipText: 'definir Fen',
+                    selector: 'node',
+                    onClickFunction: function (event) {
+                        $('#myModal').modal('show');
+
+                    }
+                }
+
+            ]
+        });
+    });
+
+
+
+
+
+</script>
+

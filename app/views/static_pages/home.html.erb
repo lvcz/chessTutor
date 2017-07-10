@@ -5,9 +5,35 @@
     <title><%= full_title(yield(:title)) %> </title>
   </head>
   <body>
-    
-    
-    
+  <div id="fundo">
+      <div class="page-header"></div>
+      <!--<img src="bQ.png" class="img-responsive" ></img>-->
+    <h1 class="text-center">Bem vindo ao ChessTutor</h1>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h3 class="text-center">Você já joga xadrez?</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+            <p class="text-center"> Não? Gostária de aprender?</p>
+        </div>
+
+        <div class="col-xs-6">
+            <p class="text-center">Sim? Gostaria de aprender novas táticas?</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <%= link_to "Comece a aprender agora",aulas_path,class:"btn btn-info" %>
+        </div>
+      </div>
+
+    </div>
+  </div>
   </body>
   
   <script>

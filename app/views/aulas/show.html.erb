@@ -5,52 +5,205 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
+<div class="panel-body">
+  <div class="row">
+    <strong>Autor:</strong>
+    <%= @aula.autor %>
+  </div>
+  <div class="row">
   <strong>Nome:</strong>
   <%= @aula.nome %>
-</p>
+  </div>
 
-<p>
+<div class="row">
   <strong>Conteudo:</strong>
   <%= @aula.conteudo %>
-</p>
-
+</div>
+</div>
 
 
 <div id="divFen" style="display: none;"><%= @aula.fen %></div>
 
+<div class="row">
+  <div class="col-xs-6 center-block">
+    <div id="board" style="width: 65%"></div>
+  </div>
+  <div class="col-xs-6 " >
+  <div class="panel">
+    <div class="panel-body">
+      <div id ="mensagem"></div>
+      <div id="voltar" class="btn btn-primary">Movimento anterior</div>
+    </div>
+  </div>
 
 
-<div id="board" style="width: 35%"></div>
+  </div>
+</div>
 
-
+<div class="ui-button">
+  <%= link_to 'Editar', edit_aula_path(@aula) , class: "btn btn-warning" %>
+  <%= link_to 'Voltar', aulas_path, class: "btn btn-danger" %>
+</div>
 <script type="text/javascript">
-   
-  var cfg = {
-      draggable: true,
-      showNotation: false,
-      position: $("#divFen").text()
-	};
+
+    var posicao = $("#divFen").text() +' <%=@aula.jogador%> - - 0 1';
+
+    var move_atual;
+    var indice_atual =0;
+    var historico_movimentos = [];
+
+    var game = new Chess();
 
 
-	var board = ChessBoard('board',cfg);
-	$(window).resize(board.resize);
 
-	var tamanho = board.squareSize();
-	
+    var onDragStart = function(source, piece) {
+        // do not pick up pieces if the game is over
+        // or if it's not that side's turn
+        if (game.game_over() === true ||
+            (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+            (game.turn() === 'b' && piece.search(/^w/) !== -1)||
+              move_atual.final) {
+            return false;
+        }
+    };
 
-	$.each(gon.marks,function(quadro,cor,valor){
+    var onDrop = function(source, target) {
+        removeGreySquares();
+
+        // see if the move is legal
+        var move = game.move({
+            from: source,
+            to: target,
+            promotion: 'q' // NOTE: always promote to a queen for example simplicity
+        });
+
+        // illegal move
+        if (move === null) return 'snapback';
+    };
+
+    var onMouseoverSquare = function(square, piece) {
+        // get list of possible moves for this square
+        if(move_atual.final) return;
+        var moves = game.moves({
+            square: square,
+            verbose: true
+        });
+        if (moves.length === 0) return;
+        greySquare(square);
+        for (var i = 0; i < moves.length; i++) {
+            greySquare(moves[i].to);
+        }
+    };
+
+    var onMouseoutSquare = function(square, piece) {
+        removeGreySquares();
+    };
+
+    var onSnapEnd = function() {
+        var achou = false;
+        board.position(game.fen());
+
+        achou = procura_proximo_movimento();
+        if(achou) {
+            movimenta_board(1000);
+        }
+
+
+    };
+
+    function procura_proximo_movimento(){
+      var achou = false;
+        $.each(gon.moves,function() {
+            if(this.fen_esperado === board.fen()){
+                achou = true;
+                indice_atual = gon.moves.indexOf(this);
+                move_atual = gon.moves[indice_atual];
+                if(move_atual.final){
+                    $('#mensagem').text(move_atual.mensagem);
+                    return;
+                }
+                posicao = move_atual.fen_computador +' <%=@aula.jogador%> - - 0 1';
+
+            }
+        });
+        return achou;
+    }
+
+    var cfg = {
+        draggable: true,
+        position: posicao,
+        onDragStart: onDragStart,
+        onDrop: onDrop,
+        onMouseoutSquare: onMouseoutSquare,
+        onMouseoverSquare: onMouseoverSquare,
+        onSnapEnd: onSnapEnd
+    };
+
+    var removeGreySquares = function() {
+        $('#board .square-55d63').css('background', '');
+    };
+
+    var greySquare = function(square) {
+        var squareEl = $('#board .square-' + square);
+
+        var background = '#a9a9a9';
+        if (squareEl.hasClass('black-3c85d') === true) {
+            background = '#696969';
+        }
+
+        squareEl.css('background', background);
+    };
+      /**Funcoes do jogo**/
+
+      Inicia();
+
+
+      function Inicia(){
+          move_atual = gon.moves[indice_atual];
+          board = ChessBoard('board', cfg);
+          posicao = move_atual.fen_computador +' <%=@aula.jogador%> - - 0 1';
+          movimenta_board(2000);
+      }
+
+
+      function movimenta_board(timeout){
+
+          setTimeout(function(){
+              board.position(posicao);
+              $('#mensagem').text(move_atual.mensagem);
+              if( game.load(posicao)) {
+                  historico_movimentos.push(posicao);
+              }
+              else{
+                  alert("Aula com erro de configuração.");
+              }
+          }, timeout);
+      }
+      function Valida_movimento(){
+
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+    /******************Marks*****************/
+    var tamanho = board.squareSize();
+
+
+    $.each(gon.marks,function(){
 		highlight(this.quadro,this.valor,this.cor);
 	});
-	
-	
-//	$.each(gon.moves ,function (de,para) {
-//      $('#board').on('click', function () {
-//          board.move(de+'-'+para);
-//      });
-//  });
-	
-	
+
+
 	function highlight(quadro,valor,cor){
 	  var quadro = getQuadro(quadro);
 
@@ -62,10 +215,13 @@
 	function getQuadro(quadro){
 		return $("div").find("[data-square='" + quadro + "']");
 	}
-	
+
+  $(window).resize(board.resize);
+
+
+
 	
 </script>
 
 
-<%= link_to 'Edit', edit_aula_path(@aula) %> |
-<%= link_to 'Back', aulas_path %>
+
