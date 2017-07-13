@@ -24,21 +24,39 @@
 
 <div id="divFen" style="display: none;"><%= @aula.fen %></div>
 
-<div class="row">
+<div class="row" style="padding-bottom: 50px">
   <div class="col-xs-6 center-block">
     <div id="board" style="width: 65%"></div>
   </div>
+
+
   <div class="col-xs-6 " >
-  <div class="panel">
-    <div class="panel-body">
-      <div id ="mensagem"></div>
-      <div id="voltar" class="btn btn-primary">Movimento anterior</div>
-    </div>
-  </div>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
 
+            <li ><a id ="mensagem"></a></li>
+          </ul>
+        </div>
 
+      </div>
+    </nav>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+
+            <li><a id="voltar">Movimento Anterior</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
   </div>
 </div>
+
+
 
 <div class="ui-button">
   <%= link_to 'Editar', edit_aula_path(@aula) , class: "btn btn-warning" %>
@@ -52,9 +70,7 @@
     var indice_atual =0;
     var historico_movimentos = [];
 
-    var game = new Chess();
-
-
+    var game;
 
     var onDragStart = function(source, piece) {
         // do not pick up pieces if the game is over
@@ -101,33 +117,49 @@
 
     var onSnapEnd = function() {
         var achou = false;
+        historico_movimentos.push(indice_atual);
         board.position(game.fen());
-
         achou = procura_proximo_movimento();
         if(achou) {
             movimenta_board(1000);
+            if(procura_final()){
+                game.set_game_over();
+
+
+            }
         }
 
 
     };
+    function procura_final(){
+        var achou = false;
+        $.each(gon.moves,function() {
+            if(this.fen_esperado === board.fen() && this.final){
+                achou = true;
+                move_atual = gon.moves[indice_atual];
+                $('#mensagem').text(move_atual.mensagem);
+            }
+        });
+        return achou;
+
+    }
 
     function procura_proximo_movimento(){
       var achou = false;
-        $.each(gon.moves,function() {
+        $.each(gon.moves,function () {
             if(this.fen_esperado === board.fen()){
                 achou = true;
                 indice_atual = gon.moves.indexOf(this);
                 move_atual = gon.moves[indice_atual];
-                if(move_atual.final){
-                    $('#mensagem').text(move_atual.mensagem);
-                    return;
-                }
+                $('#mensagem').text(move_atual.mensagem);
                 posicao = move_atual.fen_computador +' <%=@aula.jogador%> - - 0 1';
 
             }
         });
         return achou;
     }
+
+
 
     var cfg = {
         draggable: true,
@@ -162,6 +194,7 @@
           move_atual = gon.moves[indice_atual];
           board = ChessBoard('board', cfg);
           posicao = move_atual.fen_computador +' <%=@aula.jogador%> - - 0 1';
+          game = new Chess(posicao);
           movimenta_board(2000);
       }
 
@@ -171,18 +204,21 @@
           setTimeout(function(){
               board.position(posicao);
               $('#mensagem').text(move_atual.mensagem);
-              if( game.load(posicao)) {
-                  historico_movimentos.push(posicao);
-              }
-              else{
-                  alert("Aula com erro de configuração.");
+              if( !game.load(posicao)) {
+                  //alert("Aula com erro de configuração.");
               }
           }, timeout);
       }
-      function Valida_movimento(){
+      $("#voltar").on('click',function () {
+          if(historico_movimentos.length > 0) {
+              var ultimo_movimento = historico_movimentos.pop();
+              move_atual = gon.moves[ultimo_movimento];
+              posicao = move_atual.fen_computador + ' <%=@aula.jogador%> - - 0 1';
+              game.load(posicao);
+              board.position(posicao);
+          }
 
-
-      }
+      });
 
 
 

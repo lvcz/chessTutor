@@ -1,6 +1,7 @@
 <tr>
 
 
+
 <td><%= f.hidden_field :fen_esperado, label: false ,class:'form-control' %>
     <div id="board_esperado_<%= f.object.__id__ %>" style ="width: 200px;" ></div>
   <div id = "clear_board_esperado_<%=f.object.__id__ %>" class="btn btn-danger"> Limpa </div>
@@ -30,12 +31,13 @@
   <td>
     <div class="btn btn-default" id="copia_<%=f.object.__id__%>"> Copia anterior</div>
     <div class="btn btn-primary" id="copia_primeiro_<%=f.object.__id__%>"> Copia primeiro</div>
+
+
   </td>
 </tr>
 
 
 <script>
-
 
 
 
@@ -153,8 +155,6 @@
     $('#clear_board_computador_<%=f.object.__id__ %>').on('click', board_computador_<%=f.object.__id__ %>.clear);
     $('#clear_board_resultado_<%=f.object.__id__ %>').on('click', board_resultado_<%=f.object.__id__ %>.clear);
 
-    if (posicao_computador === null || posicao_computador === "8/8/8/8/8/8/8/8"){
-      /*TODO: verifica se o anterior esta preenchido e utiliza o fen dele*/
-    }
+
 
 </script>
