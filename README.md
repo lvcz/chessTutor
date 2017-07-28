@@ -1,24 +1,5 @@
-# README
+# ChessTutor
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Trabalho de Graduação desenvolvido para obtenção de grau em Bacharel de Ciencias da computação.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Sistema tutor de xadrez.
